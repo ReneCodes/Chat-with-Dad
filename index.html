@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script defer src="logic.js"></script>
     <title>Chat with Dad App</title>
   </head>
   <body>
@@ -51,13 +60,18 @@
           </div>
         </div>
         <div class="input-container">
-          <input
-            type="text"
+          <!-- Citation: 
+            SeekLoad(1. Mar. 2017), Stackoverflow Thread,    
+            (https://stackoverflow.com/questions/5286663/wrapping-text-inside-input-type-text-element-html-css#:~:text=%3C/textarea%3E-,Atributes%3A,-To%20limit%20the). https://stackoverflow.com/
+          -->
+          <textarea
             id="input"
+            cols="40"
+            rows="1"
+            minlength="1"
+            wrap="soft"
             placeholder="Message"
-            min="1"
-            required
-          />
+          ></textarea>
           <button class="btn">Send</button>
         </div>
       </div>
