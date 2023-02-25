@@ -1,0 +1,207 @@
+/* so it does not effect a width of elements when adding padding or border etc. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --primary-color: #ad75c4;
+  --primary-dark-color: #8d5aa2;
+
+  --white-100: #f5f5f5;
+
+  --gray-100: #e2e2e2;
+  --gray-300: #c0c0c0;
+
+  --gray-600: #696969;
+  --gray-800: #414141;
+  --gray-999: #181818;
+  --shadow-opacity-100: rgba(38, 36, 36, 0.1);
+  --shadow-opacity-200: rgba(38, 36, 36, 0.2);
+  --shadow-opacity-400: rgba(38, 36, 36, 0.4);
+  --shadow-opacity-600: rgba(38, 36, 36, 0.6);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  height: 100vh;
+}
+
+.phone-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 800px;
+  font-size: 16px;
+  letter-spacing: 1px;
+
+  overflow: hidden;
+  box-shadow: 1px 3px 10px var(--shadow-opacity-200);
+}
+
+.contact-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100px;
+  width: 100%;
+
+  background-color: var(--gray-800);
+}
+
+.contact-image {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  object-fit: cover;
+
+  margin: 10px;
+}
+
+.contact-name {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: var(--white-100);
+
+  margin-left: 20px;
+}
+
+.message-container {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+
+  padding: 10px;
+  padding-bottom: 65px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+
+  color: var(--white-100);
+}
+
+.text-block {
+  background-color: var(--primary-color);
+  border: 3px solid var(--primary-color);
+
+  min-width: min-content;
+  max-width: 80%;
+  padding: 5px;
+  margin: 10px;
+}
+
+.text {
+  line-height: 22px;
+}
+
+.message.right {
+  align-items: flex-end;
+}
+
+.message.left {
+  align-items: flex-start;
+}
+.message.left .text-block {
+  border: 3px solid var(--white-100);
+  background-color: white;
+  color: var(--gray-999);
+}
+
+.timestamp {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  font-size: 14px;
+  height: max-content;
+  color: var(--gray-300);
+}
+
+.message.right .timestamp {
+  color: var(--gray-800);
+}
+
+.date {
+  margin-right: 10px;
+}
+
+.input-container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: max-content;
+
+  padding: 10px;
+}
+
+#input {
+  overflow: scroll;
+  overflow-x: auto;
+
+  resize: none;
+  min-height: 45px;
+  border: none;
+  border-bottom: 2px solid transparent;
+
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--gray-999);
+  line-height: 18px;
+  letter-spacing: inherit;
+
+  background-color: var(--white-100);
+  padding: 13px 10px 12px;
+  margin-right: 10px;
+  width: 80%;
+  caret-color: var(--primary-color);
+}
+
+#input:focus {
+  outline: none;
+}
+
+#input:hover {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.input-container .btn {
+  background-color: var(--primary-color);
+  color: var(--white-100);
+  text-transform: uppercase;
+  letter-spacing: inherit;
+  font-size: 18px;
+
+  border: none;
+  border-bottom: 2px solid transparent;
+
+  min-height: 45px;
+  padding: 10px;
+  width: 20%;
+  cursor: pointer;
+}
+
+.input-container .btn:hover {
+  background-color: var(--primary-dark-color);
+}
