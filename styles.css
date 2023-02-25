@@ -42,7 +42,7 @@ body {
   font-size: 16px;
   letter-spacing: 1px;
 
-  overflow: hidden;
+  /* overflow: hidden; */
   box-shadow: 1px 3px 10px var(--shadow-opacity-200);
 }
 
@@ -54,15 +54,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: 100px;
+  height: 80px;
   width: 100%;
 
-  background-color: var(--gray-800);
+  background-color: var(--gray-999);
+  z-index: 10;
 }
 
 .contact-image {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   overflow: hidden;
   object-fit: cover;
 
@@ -70,9 +71,9 @@ body {
 }
 
 .contact-name {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: bold;
-  letter-spacing: 1px;
+  letter-spacing: 4px;
   color: var(--white-100);
 
   margin-left: 20px;
@@ -83,11 +84,16 @@ body {
   width: 100%;
 
   display: flex;
-  justify-content: flex-end;
   flex-direction: column;
+  text-align: justify;
 
-  padding: 10px;
+  padding-top: 100px;
   padding-bottom: 65px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .message {
@@ -98,6 +104,7 @@ body {
 }
 
 .text-block {
+  position: relative;
   background-color: var(--primary-color);
   border: 3px solid var(--primary-color);
 
@@ -107,7 +114,46 @@ body {
   margin: 10px;
 }
 
+.text-block::before,
+.text-block::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: calc(50% - 8px);
+  height: 18px;
+  width: 18px;
+
+  transform: rotate(45deg);
+  z-index: -2;
+}
+
+.message.right .text-block::before {
+  border-right: 8px solid var(--primary-color);
+  border-top: 8px solid var(--primary-color);
+}
+
+.message.left .text-block::before {
+  left: -10px;
+  top: calc(50% - 8px);
+
+  border-left: 8px solid var(--white-100);
+  border-bottom: 8px solid var(--white-100);
+}
+
+.message.left .text-block::after {
+  top: calc(50% - 8px);
+  left: -6px;
+
+  border-left: 8px solid white;
+  border-bottom: 8px solid white;
+  border-right: 8px solid transparent;
+  border-top: 8px solid transparent;
+
+  z-index: 0;
+}
+
 .text {
+  display: inline-block;
   line-height: 22px;
 }
 
@@ -152,6 +198,7 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   height: max-content;
+  background-color: white;
 
   padding: 10px;
 }
@@ -178,11 +225,9 @@ body {
   caret-color: var(--primary-color);
 }
 
-#input:focus {
-  outline: none;
-}
-
+#input:focus,
 #input:hover {
+  outline: none;
   border-bottom: 2px solid var(--primary-color);
 }
 
@@ -192,6 +237,7 @@ body {
   text-transform: uppercase;
   letter-spacing: inherit;
   font-size: 18px;
+  font-weight: bold;
 
   border: none;
   border-bottom: 2px solid transparent;
