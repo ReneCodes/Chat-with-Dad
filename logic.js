@@ -152,12 +152,41 @@ $(document).ready(function () {
     DONE: call build message with delay
     show dad is typing 
   */
+
+  // creating a response queue to answer chronologically
+  // pull random text out of the array
+  // calculate delay time depending on text length
+  // push to response queue
+  // call func to work on responses
+  const responseQueue = [];
+  let workingOnQueue = false;
   function getRandomDadResponse() {
     const randomText =
       randomDadText[Math.floor(Math.random() * randomDadText.length)];
-    const delay = randomText.length * 500;
-    console.log('Dad text delay', delay);
-    setTimeout(buildMessageBlock, delay, randomText);
+    const delay = randomText.length * 200;
+    // console.log('Dad text delay', delay);
+    responseQueue.push([randomText, delay]);
+    console.log(randomText);
+    // setTimeout(buildMessageBlock, delay, randomText);
+    workingOnQueue == false ? workOnResponseQueue() : null;
+  }
+
+  // Working on response queue
+  // create response message after timeout
+  // recursively call function until queue is empty
+  function workOnResponseQueue() {
+    if (responseQueue.length > 0) {
+      // is there work todo?
+      workingOnQueue = true;
+      const task = responseQueue[0];
+      setTimeout(() => {
+        buildMessageBlock(task[0]);
+        responseQueue.shift();
+        workOnResponseQueue();
+      }, task[1]);
+    } else {
+      workingOnQueue = false;
+    }
   }
 
   /* TODO
