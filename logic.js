@@ -83,10 +83,15 @@ $(document).ready(function () {
   );
 
   // Play sound on send
+  /* TODO
+    only send message when inut value greater-equal 1
+  */
   $('.btn').on('click', function () {
+    // if ($('#input')[0].value.length >= 1) {}
     $sound[0].play();
-    buildMessageBlock('This is a test message', 'right');
+    buildMessageBlock(getUserMessage() || 'Test Test', 'right', true);
     getTimestamp();
+    focusOnInput();
   });
 
   $('#send-text').on('submit', function (event) {
@@ -97,31 +102,47 @@ $(document).ready(function () {
     // console.log(event);
   });
 
+  // extract human message from textarea
+  function getUserMessage() {
+    return $('#input')[0].value;
+  }
+
+  function focusOnInput() {
+    $('#input')[0].focus();
+  }
+
   // build message
-  function buildMessageBlock(message, user) {
+  /* TODO
+    call timestamp
+    attach timestamp
+  */
+  function buildMessageBlock(message, position, human = false) {
     const $message = $('<div>');
     const $block = $('<div>');
     const $text = $('<div>');
     const $timestamp = $('<div>');
 
-    $message.addClass('message').addClass(user);
+    $message.addClass('message').addClass(position);
     $block.addClass('text-block');
     $text.addClass('text').text(message).appendTo($block);
     $timestamp.addClass('timestamp').text('timestamp').appendTo($block);
     $message.append($block);
+
     $('.message-container').append($message);
     // scroll down to end last message
     scrollToLastMessage(true);
-    //clear message in textarea
-    $('#input')[0].value = '';
-    $('#input')[0].focus();
+    //clear message in textarea when a human send a text
+    if (human) {
+      $('#input')[0].value = '';
+      focusOnInput();
+    }
   }
+
   /* TODO
     get date
     extract day, month, year
     extract hour, minutes
-    create timestamp block
-    append to text-block
+    create and return timestamp block
   */
   function getTimestamp() {
     // console.log('timestamp creation');
