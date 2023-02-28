@@ -74,6 +74,15 @@
 
 $(document).ready(function () {
   scrollToLastMessage();
+
+  const randomDadText = [
+    'Alloh!',
+    'Whitespace',
+    'let me ask your mom',
+    'Is it broken?',
+    'I have no idea :( Sorry',
+  ];
+
   // Creates a new <audio> element
   const $sound = $('<audio preload=auto>');
   // See below for more sound URLs you can use
@@ -116,7 +125,7 @@ $(document).ready(function () {
     call timestamp
     attach timestamp
   */
-  function buildMessageBlock(message, position, human = false) {
+  function buildMessageBlock(message, position = 'left', human = false) {
     const $message = $('<div>');
     const $block = $('<div>');
     const $text = $('<div>');
@@ -135,7 +144,20 @@ $(document).ready(function () {
     if (human) {
       $('#input')[0].value = '';
       focusOnInput();
+      getRandomDadResponse();
     }
+  }
+  /* TODO
+    DONE: choose random message
+    DONE: call build message with delay
+    show dad is typing 
+  */
+  function getRandomDadResponse() {
+    const randomText =
+      randomDadText[Math.floor(Math.random() * randomDadText.length)];
+    const delay = randomText.length * 500;
+    console.log('Dad text delay', delay);
+    setTimeout(buildMessageBlock, delay, randomText);
   }
 
   /* TODO
@@ -161,16 +183,17 @@ $(document).ready(function () {
     DONE: scrolling behaviour -> smooth
     DONE: scroll to last item in container
   */
-  function scrollToLastMessage(addText = false) {
+  function scrollToLastMessage(newText = false) {
+    // Reference: jQuery documentation .animate()
     $('.message-container').animate(
-      { scrollTop: $('.message').last().offset().top },
+      { scrollTop: $('.message').last()[0].offsetTop },
       {
         duration: 1600,
         queue: false, // run animation outside queue, start without waiting
       }
     );
     // only fade-in newly added messages
-    if (addText) {
+    if (newText) {
       $('.message').animate({ opacity: 1 }, { duration: 1000 });
     } else {
       $('.message').css('opacity', 1);
