@@ -10,15 +10,18 @@
 :root {
   --primary-color: #ad75c4;
   --primary-dark-color: #8d5aa2;
+  --secondary-color: #bbf3e6;
 
   --white-100: #f5f5f5;
 
   --gray-100: #e2e2e2;
   --gray-300: #c0c0c0;
 
+  --gray-500: #878789;
   --gray-600: #696969;
   --gray-800: #414141;
   --gray-999: #181818;
+
   --shadow-opacity-100: rgba(38, 36, 36, 0.1);
   --shadow-opacity-200: rgba(38, 36, 36, 0.2);
   --shadow-opacity-400: rgba(38, 36, 36, 0.4);
@@ -36,7 +39,7 @@ body {
 
 .phone-container {
   position: relative;
-  width: 100%;
+  width: 100vw;
   max-width: 500px;
   height: 800px;
   font-size: 16px;
@@ -57,7 +60,7 @@ body {
   height: 80px;
   width: 100%;
 
-  background-color: var(--gray-999);
+  background-color: var(--gray-800);
   z-index: 10;
 }
 
@@ -100,13 +103,13 @@ body {
   display: flex;
   flex-direction: column;
 
-  color: var(--white-100);
+  color: var(--gray-999);
 }
 
 .text-block {
   position: relative;
-  background-color: var(--primary-color);
-  border: 3px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  border: 3px solid var(--secondary-color);
 
   min-width: min-content;
   max-width: 80%;
@@ -128,8 +131,8 @@ body {
 }
 
 .message.right .text-block::before {
-  border-right: 8px solid var(--primary-color);
-  border-top: 8px solid var(--primary-color);
+  border-right: 8px solid var(--secondary-color);
+  border-top: 8px solid var(--secondary-color);
 }
 
 .message.left .text-block::before {
@@ -167,7 +170,6 @@ body {
 .message.left .text-block {
   border: 3px solid var(--white-100);
   background-color: white;
-  color: var(--gray-999);
 }
 
 .timestamp {
@@ -181,7 +183,7 @@ body {
 }
 
 .message.right .timestamp {
-  color: var(--gray-800);
+  color: var(--gray-500);
 }
 
 .date {
@@ -194,13 +196,16 @@ body {
   bottom: 0;
   width: 100%;
 
+  background-color: white;
+
+  padding: 10px;
+}
+
+#send-text {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   height: max-content;
-  background-color: white;
-
-  padding: 10px;
 }
 
 #input {
