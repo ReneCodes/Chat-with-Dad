@@ -125,7 +125,7 @@ $(document).ready(function () {
     $message.addClass('message').addClass(position);
     $block.addClass('text-block');
     $text.addClass('text').text(message).appendTo($block);
-    $timestamp.addClass('timestamp').text('timestamp').appendTo($block);
+    $timestamp.addClass('timestamp').text(getTimestamp()).appendTo($block);
     $message.append($block);
 
     $('.message-container').append($message);
@@ -139,13 +139,22 @@ $(document).ready(function () {
   }
 
   /* TODO
-    get date
-    extract day, month, year
-    extract hour, minutes
-    create and return timestamp block
+    DONE: get date
+    DONE: extract hour, minutes
+    DONE: extract day, month, year
+    Done: return timestamp string
   */
   function getTimestamp() {
-    // console.log('timestamp creation');
+    const fullDate = new Date();
+    const time = fullDate.toLocaleTimeString(); // '15:36:47'
+    const date = fullDate.toDateString().split(' '); // ['Tue', 'Feb', '28', '2023']
+
+    const timeStamp = `${date[2]}.${date[1]}.${date[3].slice(
+      2,
+      4
+    )} ${time.slice(0, 5)}`;
+
+    return timeStamp;
   }
 
   /* TODO
@@ -153,7 +162,6 @@ $(document).ready(function () {
     DONE: scroll to last item in container
   */
   function scrollToLastMessage(addText = false) {
-    console.log($('.message').last()[0].offsetTop);
     $('.message-container').animate(
       { scrollTop: $('.message').last().offset().top },
       {
