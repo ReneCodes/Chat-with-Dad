@@ -39,6 +39,7 @@
               </div>
             </div>
           </div>
+
           <div class="message right">
             <div class="text-block">
               <div class="text">
@@ -112,19 +113,23 @@
           </div>
         </div>
         <div class="input-container">
-          <!-- Citation: 
-            SeekLoad(1. Mar. 2017), Stackoverflow Thread,    
-            (https://stackoverflow.com/questions/5286663/wrapping-text-inside-input-type-text-element-html-css#:~:text=%3C/textarea%3E-,Atributes%3A,-To%20limit%20the). https://stackoverflow.com/
-          -->
-          <textarea
-            id="input"
-            cols="40"
-            rows="1"
-            minlength="1"
-            wrap="soft"
-            placeholder="Message"
-          ></textarea>
-          <button class="btn">Send</button>
+          <form id="send-text">
+            <!-- Citation: 
+              SeekLoad(1. Mar. 2017), Stackoverflow Thread,    
+              (https://stackoverflow.com/questions/5286663/wrapping-text-inside-input-type-text-element-html-css#:~:text=%3C/textarea%3E-,Atributes%3A,-To%20limit%20the). https://stackoverflow.com/
+            -->
+            <textarea
+              id="input"
+              cols="40"
+              rows="1"
+              minlength="1"
+              wrap="soft"
+              placeholder="Message"
+              autofocus="on"
+              spellcheck="true"
+            ></textarea>
+            <button type="submit" class="btn">Send</button>
+          </form>
         </div>
       </div>
     </main>
