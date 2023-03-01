@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon borrowed from https://icanhazdadjoke.com  -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://icanhazdadjoke.com/static/favicon-32x32.png"
+    />
+
     <link rel="stylesheet" href="styles.css" />
     <script
       defer
@@ -19,12 +27,24 @@
     <main>
       <div class="phone-container">
         <div class="contact-container">
-          <img
-            class="contact-image"
-            src="https://randomuser.me/api/portraits/men/72.jpg"
-            alt="contact-picture"
-          />
-          <h1 class="contact-name">Care Bear</h1>
+          <div class="contact">
+            <img
+              class="contact-image"
+              src="https://randomuser.me/api/portraits/men/72.jpg"
+              alt="contact-picture"
+            />
+            <h1 class="contact-name">Care Bear</h1>
+          </div>
+          <div class="menu-container">
+            <div class="menu-bar">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+            <div class="menu-items">
+              <div class="m-item joke-button">Tell me a Joke</div>
+            </div>
+          </div>
         </div>
         <div class="message-container">
           <div class="message left">
@@ -134,7 +154,7 @@
               (http://svgicons.sparkk.fr/). http://svgicons.sparkk.fr/
             -->
               <svg
-                class="svg-icon"
+                class="submit-icon"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >

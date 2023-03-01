@@ -1,7 +1,33 @@
 'use strict';
 
 $(document).ready(function () {
+  // var for Random Dad response Queue
+  const responseQueue = [];
+  let workingOnQueue = false;
+
   scrollToLastMessage();
+
+  /* Let your Dad tell you a joke
+      call API to fetch a joke
+      extract the data from response json
+      create text-message and get amused by dad
+  */
+  $('.joke-button').on('click', function () {
+    // fetch GET request tailored to dadjoke => see their documentation https://icanhazdadjoke.com/api
+    const config = {
+      headers: {
+        Accept: 'application/json',
+      },
+      UserAgent: 'Playing with API for project (https://github.com/ReneCodes)',
+    };
+    fetch('https://icanhazdadjoke.com/', config)
+      .then((res) => res.json())
+      .then((data) => {
+        buildMessageBlock('Tell me a joke, Dad!', 'right');
+        responseQueue.push([data.joke, 3000]);
+        workingOnQueue == false ? workOnResponseQueue() : null;
+      });
+  });
 
   const randomDadText = [
     'Alloh!',
@@ -110,8 +136,7 @@ $(document).ready(function () {
   // calculate delay time depending on text length
   // push to response queue
   // call func to work on responses
-  const responseQueue = [];
-  let workingOnQueue = false;
+
   function getRandomDadResponse() {
     const randomText =
       randomDadText[Math.floor(Math.random() * randomDadText.length)];

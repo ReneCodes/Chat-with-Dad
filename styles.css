@@ -14,18 +14,13 @@
 
   --white-100: #f5f5f5;
 
-  --gray-100: #e2e2e2;
   --gray-300: #c0c0c0;
 
   --gray-500: #878789;
-  --gray-600: #696969;
   --gray-800: #414141;
   --gray-999: #181818;
 
-  --shadow-opacity-100: rgba(38, 36, 36, 0.1);
-  --shadow-opacity-200: rgba(38, 36, 36, 0.2);
-  --shadow-opacity-400: rgba(38, 36, 36, 0.4);
-  --shadow-opacity-600: rgba(38, 36, 36, 0.6);
+  --shadow-opacity-200: rgba(38, 36, 36, 0.4);
 }
 
 body {
@@ -42,6 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  border-radius: 6px;
 
   width: 100vw;
   max-width: 500px;
@@ -50,10 +46,11 @@ body {
   font-size: 16px;
   letter-spacing: 1px;
 
-  /* overflow: hidden; */
-  box-shadow: 1px 3px 10px var(--shadow-opacity-200);
+  overflow: hidden;
+  box-shadow: 0px 5px 20px var(--shadow-opacity-200);
 }
 
+/* CONTACT */
 .contact-container {
   position: absolute;
   top: 0;
@@ -61,12 +58,20 @@ body {
 
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   height: 80px;
   width: 100%;
 
   background-color: var(--gray-800);
   z-index: 10;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1;
 }
 
 .contact-image {
@@ -87,6 +92,83 @@ body {
   margin-left: 20px;
 }
 
+.menu-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  width: fit-content;
+}
+
+.menu-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.menu-bar .bar {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  margin: 2px;
+  background-color: var(--white-100);
+
+  z-index: 1;
+}
+
+.menu-bar:hover .bar {
+  background-color: var(--primary-dark-color);
+}
+
+.menu-items {
+  position: absolute;
+  right: -500px;
+  top: 30px;
+  width: fit-content;
+
+  padding-top: 30px;
+
+  background-color: var(--gray-800);
+  color: var(--white-100);
+
+  transition: all 0.6s ease-out;
+}
+.menu-bar:hover ~ .menu-items,
+.menu-bar:active ~ .menu-items,
+.menu-items:hover,
+.menu-items:active {
+  right: 0px;
+}
+
+.m-item {
+  display: block;
+  width: max-content;
+}
+
+.joke-button {
+  display: inline-block;
+  text-align: center;
+
+  margin: 0 auto;
+  padding: 10px 20px;
+
+  cursor: pointer;
+}
+.joke-button:hover {
+  color: var(--primary-color);
+}
+
+.joke-button:active {
+  background-color: var(--primary-dark-color);
+  color: var(--white-100);
+}
+
+/* MESSAGE */
 .message-container {
   height: 100%;
   width: 100%;
@@ -195,6 +277,7 @@ body {
   margin-right: 10px;
 }
 
+/* INPUT */
 .input-container {
   z-index: 10;
   width: 100%;
@@ -256,7 +339,6 @@ body {
   border-bottom: 2px solid transparent;
 
   min-height: 45px;
-  /* padding: 10px; */
   width: 20%;
   cursor: pointer;
 }
@@ -265,12 +347,15 @@ body {
   background-color: var(--primary-dark-color);
 }
 
-/*  */
-.svg-icon {
+/* Citation: 
+Sparkk(n.a.), Ready to use SVG icons for the web,    
+(http://svgicons.sparkk.fr/). http://svgicons.sparkk.fr/ 
+*/
+.submit-icon {
   width: 36px;
   height: 36px;
 }
 
-.svg-icon path {
+.submit-icon path {
   fill: var(--white-100);
 }
