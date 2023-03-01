@@ -1,86 +1,21 @@
-/**
- * get access to input
- * attache eventlistener "enter"
- * create message function
-
- * 
- * get access to input
- * attache eventlistener "click"
- * create message function
- * 
- * function create message 
- * build and create text-block
- * create timestamp function
- * attach classes
- * append text-block to message-container
- * scroll down to lowest text-block function
- * call auto-answer function with (random time function)
- * 
- * function random time
- * generate and return random millisecond 
- * 
- * function auto-answer
- * build and create text-block
- * fill text with random text from text-array-library
- * create timestamp function
- * attach classes
- * append text-block to message-container
- * scroll down to lowest text-block function
- * 
- * function create timestamp 
- * https://api.jquery.com/event.timeStamp/
- * get new date (new Date).getTime()
- * extract date dd/mmm/yy
- * calculate time 24h
- * build timestamp 27. Feb. 23 | 14:02
- * hour and minutes shall always have 2 digits 00 - 24
- * return timestamp
- * 
- * function lowest-text-block-scroll
- * get position on last text-block
- * scroll down to it
-*/
-
-/*
-  jQuery
-  2 ways to loop through jQuery collection
-  
-  $paragraphs.each(function (index, element){
-    $paragraph = $(element);
-    $paragraph.html(paragraph.html() + "...woweeee!");
-  })
-
-  // using this keyword
-  $paragraphs.each(function (index, element){
-    $paragraph = $(this);
-    $paragraph.html(paragraph.html() + "...woweeee!");
-  })
-*/
-
-/*
-  jQuery eventlistener
-    .on('listener', function(event){});
-
-  $("#dog-pic").on("click", function(event) {
-        var $dot = $("<div></div>");
-        console.log(event);
-        $dot.addClass("dot");
-        $dot.css("top", event.pageY + 'px')
-            .css("left", event.pageX + 'px');
-        $dot.appendTo("body");
-  });
-
-*/
+'use strict';
 
 $(document).ready(function () {
   scrollToLastMessage();
 
   const randomDadText = [
     'Alloh!',
-    'Whitespace',
+    'Try turning it on and off again.',
     'let me ask your mom',
     'Is it broken?',
     'I have no idea :( Sorry',
+    'Thanks, Glad I could help.',
+    'Do What You Love',
+    'Work Smarter, Not Harder',
+    'Come home before the street lights come on',
+    'I FINALLY FIGURED OUT HOW TO LOCK THE CAPITAL KEY. THIS IS A GAME CHANGER',
+    ':-)',
+    'What is Grumpy Cat?',
   ];
 
   // Creates a new <audio> element
@@ -93,7 +28,7 @@ $(document).ready(function () {
 
   // Play sound on send
   /* TODO
-    only send message when inut value greater-equal 1
+    only send message when input value greater-equal 1
   */
   $('.btn').on('click', function () {
     // if ($('#input')[0].value.length >= 1) {}
@@ -103,12 +38,37 @@ $(document).ready(function () {
     focusOnInput();
   });
 
+  // prevents 'reload page on submit' default behaviour
   $('#send-text').on('submit', function (event) {
     event.preventDefault();
   });
 
+  /* AUTO GROW TEXTAREA HEIGHT
+    - checks for line-breaks in the input field
+    - auto adds/decreases rows of textarea => max rows 4
+    - auto insert line-break when writing continuously
+  */
   $('#input').on('input', function (event) {
-    // console.log(event);
+    let inputValue = event.target.value.split(/\n/g);
+    if (inputValue.length > 1 && event.target.rows <= 4) {
+      event.target.rows = inputValue.length;
+    } else if (inputValue.length === 1) {
+      event.target.rows = inputValue.length;
+    }
+
+    let maxLetterPerLine = Math.ceil(
+      0.092 * (event.target.offsetWidth - event.target.offsetTop * 2)
+    );
+
+    // Auto insert linebreak in textarea input when
+    // char length exceeds textarea's width
+    if (inputValue[inputValue.length - 1].length >= maxLetterPerLine) {
+      const splitInput = event.target.value.split(' ');
+      const lastWord = splitInput.slice(-1);
+
+      const prepend = splitInput.slice(0, -1).join(' ');
+      event.target.value = prepend + '\n' + lastWord;
+    }
   });
 
   // extract human message from textarea
@@ -143,6 +103,7 @@ $(document).ready(function () {
     //clear message in textarea when a human send a text
     if (human) {
       $('#input')[0].value = '';
+      $('#input')[0].rows = 1;
       focusOnInput();
       getRandomDadResponse();
     }
@@ -163,7 +124,7 @@ $(document).ready(function () {
   function getRandomDadResponse() {
     const randomText =
       randomDadText[Math.floor(Math.random() * randomDadText.length)];
-    const delay = randomText.length * 200;
+    const delay = randomText.length * 150;
     // console.log('Dad text delay', delay);
     responseQueue.push([randomText, delay]);
     console.log(randomText);
