@@ -39,9 +39,14 @@ body {
 
 .phone-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
   width: 100vw;
   max-width: 500px;
-  height: 800px;
+  height: 100vh;
+  max-height: 900px;
   font-size: 16px;
   letter-spacing: 1px;
 
@@ -88,18 +93,15 @@ body {
 
   display: flex;
   flex-direction: column;
-  text-align: justify;
 
   padding-top: 100px;
-  padding-bottom: 65px;
+  padding-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;
 
   overflow: scroll;
   overflow-y: auto;
   overflow-x: hidden;
-
-  /* scroll-behavior: smooth; */
 }
 
 .message {
@@ -160,7 +162,6 @@ body {
 }
 
 .text {
-  display: inline-block;
   line-height: 22px;
 }
 
@@ -195,12 +196,11 @@ body {
 }
 
 .input-container {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  z-index: 10;
   width: 100%;
+  height: min-content;
 
-  background-color: white;
+  background-color: var(--white-100);
 
   padding: 10px;
 }
@@ -215,8 +215,8 @@ body {
 #input {
   overflow: scroll;
   overflow-x: auto;
-
   resize: none;
+
   min-height: 45px;
   border: none;
   border-bottom: 2px solid transparent;
@@ -227,7 +227,7 @@ body {
   line-height: 18px;
   letter-spacing: inherit;
 
-  background-color: var(--white-100);
+  background-color: white;
   padding: 13px 10px 12px;
   margin-right: 10px;
   width: 80%;
@@ -241,6 +241,10 @@ body {
 }
 
 .input-container .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background-color: var(--primary-color);
   color: var(--white-100);
   text-transform: uppercase;
@@ -252,11 +256,21 @@ body {
   border-bottom: 2px solid transparent;
 
   min-height: 45px;
-  padding: 10px;
+  /* padding: 10px; */
   width: 20%;
   cursor: pointer;
 }
 
 .input-container .btn:hover {
   background-color: var(--primary-dark-color);
+}
+
+/*  */
+.svg-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.svg-icon path {
+  fill: var(--white-100);
 }

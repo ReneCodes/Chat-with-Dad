@@ -16,24 +16,15 @@ $(document).ready(function () {
     'I FINALLY FIGURED OUT HOW TO LOCK THE CAPITAL KEY. THIS IS A GAME CHANGER',
     ':-)',
     'What is Grumpy Cat?',
+    `OK. I'LL TAKE A NAP.`,
   ];
 
-  // Creates a new <audio> element
-  const $sound = $('<audio preload=auto>');
-  // See below for more sound URLs you can use
-  $sound.attr(
-    'src',
-    'https://www.kasandbox.org/programming-sounds/retro/hit1.mp3'
-  );
-
-  // Play sound on send
   /* TODO
     only send message when input value greater-equal 1
   */
   $('.btn').on('click', function () {
     // if ($('#input')[0].value.length >= 1) {}
-    $sound[0].play();
-    buildMessageBlock(getUserMessage() || 'Test Test', 'right', true);
+    buildMessageBlock(getUserMessage() || 'Test text', 'right', true);
     getTimestamp();
     focusOnInput();
   });
@@ -57,7 +48,7 @@ $(document).ready(function () {
     }
 
     let maxLetterPerLine = Math.ceil(
-      0.092 * (event.target.offsetWidth - event.target.offsetTop * 2)
+      0.092 * (event.target.offsetWidth - event.target.offsetLeft * 2)
     );
 
     // Auto insert linebreak in textarea input when
