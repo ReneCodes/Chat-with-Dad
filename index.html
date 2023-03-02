@@ -25,65 +25,69 @@
   </head>
   <body>
     <main>
-      <div class="phone-container">
-        <div class="contact-container">
-          <div class="contact">
-            <img
-              class="contact-image"
-              src="https://randomuser.me/api/portraits/men/72.jpg"
-              alt="contact-picture"
-            />
-            <h1 class="contact-name">Care Bear</h1>
-          </div>
-          <div class="menu-container">
-            <div class="menu-bar">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
+      <div class="phone-frame">
+        <div class="phone-container">
+          <div class="contact-container">
+            <div class="contact">
+              <img
+                class="contact-image"
+                src="https://randomuser.me/api/portraits/men/72.jpg"
+                alt="contact-picture"
+              />
+              <h1 class="contact-name">Care Bear</h1>
             </div>
-            <div class="menu-items">
-              <div class="m-item menu-btn" id="joke-button">Tell Me A Joke</div>
-              <div class="m-item menu-btn" id="delete-chat">
-                Clear Chat History
+            <div class="menu-container">
+              <div class="menu-bar">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </div>
+              <div class="menu-items">
+                <div class="m-item menu-btn" id="joke-button">
+                  Tell Me A Joke
+                </div>
+                <div class="m-item menu-btn" id="delete-chat">
+                  Clear Chat History
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="message-container">
-          <!-- Inserted via JS/jQuery -->
-        </div>
-        <div class="input-container">
-          <form id="send-text">
-            <!-- Citation: 
+          <div class="message-container">
+            <!-- Inserted via JS/jQuery -->
+          </div>
+          <div class="input-container">
+            <form id="send-text">
+              <!-- Citation: 
               SeekLoad(1. Mar. 2017), Stackoverflow Thread,    
               (https://stackoverflow.com/questions/5286663/wrapping-text-inside-input-type-text-element-html-css#:~:text=%3C/textarea%3E-,Atributes%3A,-To%20limit%20the). https://stackoverflow.com/
             -->
-            <textarea
-              id="input"
-              cols="40"
-              rows="1"
-              minlength="1"
-              wrap="soft"
-              placeholder="Message"
-              autofocus="on"
-              spellcheck="true"
-            ></textarea>
-            <button type="submit" class="sent-text-btn">
-              <!-- Citation: 
+              <textarea
+                id="input"
+                cols="40"
+                rows="1"
+                minlength="1"
+                wrap="soft"
+                placeholder="Message"
+                autofocus="on"
+                spellcheck="true"
+              ></textarea>
+              <button type="submit" class="sent-text-btn">
+                <!-- Citation: 
               Sparkk(n.a.), Ready to use SVG icons for the web,    
               (http://svgicons.sparkk.fr/). http://svgicons.sparkk.fr/
             -->
-              <svg
-                class="submit-icon"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.218,2.268L2.477,8.388C2.13,8.535,2.164,9.05,2.542,9.134L9.33,10.67l1.535,6.787c0.083,0.377,0.602,0.415,0.745,0.065l6.123-14.74C17.866,2.46,17.539,2.134,17.218,2.268 M3.92,8.641l11.772-4.89L9.535,9.909L3.92,8.641z M11.358,16.078l-1.268-5.613l6.157-6.157L11.358,16.078z"
-                ></path>
-              </svg>
-            </button>
-          </form>
+                <svg
+                  class="submit-icon"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.218,2.268L2.477,8.388C2.13,8.535,2.164,9.05,2.542,9.134L9.33,10.67l1.535,6.787c0.083,0.377,0.602,0.415,0.745,0.065l6.123-14.74C17.866,2.46,17.539,2.134,17.218,2.268 M3.92,8.641l11.772-4.89L9.535,9.909L3.92,8.641z M11.358,16.078l-1.268-5.613l6.157-6.157L11.358,16.078z"
+                  ></path>
+                </svg>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </main>

@@ -4,7 +4,7 @@ $(document).ready(function () {
   // Variables and Array for Random Dad response and Queue
   const responseQueue = [];
   let workingOnQueue = false;
-  const randomDadText = [
+  const randomDadTexts = [
     'Alloh!',
     'Try turning it on and off again.',
     'let me ask your mom',
@@ -39,9 +39,17 @@ $(document).ready(function () {
         $('.message-container').append(textBlock);
       });
     }
-    $('.message').length > 0
-      ? scrollToLastMessage(false, 0)
-      : getRandomDadResponse();
+    $('.message').length > 0 ? scrollToLastMessage(false, 0) : introText();
+  }
+
+  // Chat App Introduction on new Chat
+  function introText() {
+    getRandomDadResponse(
+      "Alloh! It's been a while. How are you doing? \nI'm still getting used to typing on this phone keyboard.\nSo bear with me it might take a while to respond."
+    );
+    getRandomDadResponse(
+      'But I will respond to every text. Promise!\nGreetings, Dad'
+    );
   }
 
   /* Save Chat from Session Storage
@@ -80,7 +88,7 @@ $(document).ready(function () {
   });
 
   /* Let your Dad tell you a joke
-    - call API to fetch a joke
+    - calls API to fetch a joke
     - extract the data from response json
     - create text-message and get amused by dad
   */
@@ -160,14 +168,16 @@ $(document).ready(function () {
     $('#input')[0].focus();
   }
 
-  //
-  /* Build Message Blocks
+  /** Build Message Blocks
     - create HTML elements
     - add classes and content
     - call timestamp
     - append message to Message-Container
-    - call random dad respoonse when message come from user
+    - call random dad respoonse when message comes from user
     - calling function to store message 
+    @param {String} textMessage - text for message
+    @param {String} position - class for message to display left | right
+    @param {Boolean} human - true: input from user | false: random message
   */
   function buildMessageBlock(message, position = 'left', human = false) {
     const $message = $('<div>');
@@ -185,6 +195,7 @@ $(document).ready(function () {
     $message.append($block);
 
     $('.message-container').append($message);
+
     // scroll down to end last message
     scrollToLastMessage(true);
     //clear message in textarea when a human send a text
@@ -215,19 +226,25 @@ $(document).ready(function () {
     return timeStamp;
   }
 
-  /* Random Dad Response
+  /** Random Dad Response
     - choose random message from Array
     - calculate delay time depending on text length
     - push message with delay time into response queue
     - call function to work on response queue
+    @param {String} text - provided text for generated message
   */
-  function getRandomDadResponse() {
-    const randomText =
-      randomDadText[Math.floor(Math.random() * randomDadText.length)];
-    const delay = randomText.length * 150;
-    // console.log('Dad text delay', delay);
+  function getRandomDadResponse(text = '') {
+    let randomText = '';
+    let delay = 1600;
+
+    if (text) {
+      randomText = text;
+    } else {
+      randomText =
+        randomDadTexts[Math.floor(Math.random() * randomDadTexts.length)];
+      delay += randomText.length * 15;
+    }
     responseQueue.push([randomText, delay]);
-    // setTimeout(buildMessageBlock, delay, randomText);
     workingOnQueue == false ? workOnResponseQueue() : null;
   }
 
@@ -251,11 +268,13 @@ $(document).ready(function () {
     }
   }
 
-  /* Scroll Down
+  /** Scroll Down
     - animates to scroll down to last message
       in default time 1.6s
-    - instant scroll down when loading messages from session storage
+    - instant scroll down when loading messages
     - calls function to fade in only new messages
+    @param {Number} time - set delay time for scrolling | default: 1600
+    @param {Boolean} newText - true: newly added text | false: text from session storage
   */
   function scrollToLastMessage(newText = false, time = 1600) {
     // Reference: jQuery documentation .animate()
@@ -269,9 +288,10 @@ $(document).ready(function () {
     fadeInMessage(newText);
   }
 
-  /* Display messages
+  /** Display messages
     - fade-in every newly added messages
     - instantly display existing messages from storage
+    @param {Boolean} _newText - true: opacity duration 800 | false: instantly to opacity 1
   */
   function fadeInMessage(_newText) {
     if (_newText) {
