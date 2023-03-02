@@ -1,34 +1,9 @@
 'use strict';
 
 $(document).ready(function () {
-  // var for Random Dad response Queue
+  // Variables and Array for Random Dad response and Queue
   const responseQueue = [];
   let workingOnQueue = false;
-
-  scrollToLastMessage();
-
-  /* Let your Dad tell you a joke
-      call API to fetch a joke
-      extract the data from response json
-      create text-message and get amused by dad
-  */
-  $('.joke-button').on('click', function () {
-    // fetch GET request tailored to dadjoke => see their documentation https://icanhazdadjoke.com/api
-    const config = {
-      headers: {
-        Accept: 'application/json',
-      },
-      UserAgent: 'Playing with API for project (https://github.com/ReneCodes)',
-    };
-    fetch('https://icanhazdadjoke.com/', config)
-      .then((res) => res.json())
-      .then((data) => {
-        buildMessageBlock('Tell me a joke, Dad!', 'right');
-        responseQueue.push([data.joke, 3000]);
-        workingOnQueue == false ? workOnResponseQueue() : null;
-      });
-  });
-
   const randomDadText = [
     'Alloh!',
     'Try turning it on and off again.',
@@ -45,17 +20,88 @@ $(document).ready(function () {
     `OK. I'LL TAKE A NAP.`,
   ];
 
-  /* TODO
-    only send message when input value greater-equal 1
+  getSessionStorageChat();
+
+  /* Extracts Chat from Session Storage
+    - get Chat Key reference => tracks number of messages stored
+    - loop over getChatKey
+    - extract value chatHistory
+    - append it to message container
+    - scroll down to last message or get random dad message
   */
-  $('.btn').on('click', function () {
-    // if ($('#input')[0].value.length >= 1) {}
-    buildMessageBlock(getUserMessage() || 'Test text', 'right', true);
-    getTimestamp();
-    focusOnInput();
+  function getSessionStorageChat() {
+    if (sessionStorage.getItem(`chatKeys`)) {
+      const $getChatKey = $(sessionStorage.getItem('chatKeys').split(','));
+      $('.message-container').text('');
+
+      $getChatKey.each((idx) => {
+        const textBlock = sessionStorage.getItem(`chatHistory${idx}`);
+        $('.message-container').append(textBlock);
+      });
+    }
+    $('.message').length > 0
+      ? scrollToLastMessage(false, 0)
+      : getRandomDadResponse();
+  }
+
+  /* Save Chat from Session Storage
+    - collect all messages
+    - loop over messages and count and create Chat Keys reference
+    - again loop over messages and store 
+    - message value with chatHistory[Chat Key]
+  */
+  function saveSessionStorageChat() {
+    const $chatElements = $('.message');
+    const setChatKey = [];
+
+    $chatElements.each((idx) => {
+      setChatKey[idx] = idx;
+    });
+    sessionStorage.setItem('chatKeys', setChatKey);
+
+    $chatElements.each((idx, msg) => {
+      sessionStorage.setItem(`chatHistory${idx}`, msg.outerHTML);
+    });
+  }
+
+  /* DELETE Session Storage
+    - get Chat Keys reference
+    - loop over keys and remove respective chatHistory messages
+      from session storage, 
+   */
+  $('#delete-chat').on('click', function () {
+    const $getChatKey = $(sessionStorage.getItem('chatKeys').split(','));
+
+    $getChatKey.each((idx) => {
+      sessionStorage.removeItem(`chatHistory${idx}`);
+    });
+    getSessionStorageChat();
+    sessionStorage.removeItem(`chatKeys`);
   });
 
-  // prevents 'reload page on submit' default behaviour
+  /* Let your Dad tell you a joke
+    - call API to fetch a joke
+    - extract the data from response json
+    - create text-message and get amused by dad
+  */
+  $('#joke-button').on('click', function () {
+    // fetch GET request tailored to dadjoke => see their documentation https://icanhazdadjoke.com/api
+    const config = {
+      headers: {
+        Accept: 'application/json',
+      },
+      UserAgent: 'Playing with API for project (https://github.com/ReneCodes)',
+    };
+    fetch('https://icanhazdadjoke.com/', config)
+      .then((res) => res.json())
+      .then((data) => {
+        buildMessageBlock('Tell me a joke, Dad!', 'right');
+        responseQueue.push([data.joke, 2000]);
+        workingOnQueue == false ? workOnResponseQueue() : null;
+      });
+  });
+
+  // Prevents 'reload page on submit' default behaviour
   $('#send-text').on('submit', function (event) {
     event.preventDefault();
   });
@@ -88,19 +134,40 @@ $(document).ready(function () {
     }
   });
 
-  // extract human message from textarea
+  /* "SENT" Text Message
+    - checks for input value in Textarea,
+    - calls functions to build messages and 
+      passes function to extract input value
+  */
+  $('.sent-text-btn').on('click', function () {
+    if ($('#input')[0].value.length >= 1) {
+      buildMessageBlock(
+        getUserMessage() || 'Default Message \n Something went wrong',
+        'right',
+        true
+      );
+    }
+    focusOnInput();
+  });
+
+  // Extracts and returns message from textarea
   function getUserMessage() {
     return $('#input')[0].value;
   }
 
+  // Sets focus on Input textarea
   function focusOnInput() {
     $('#input')[0].focus();
   }
 
-  // build message
-  /* TODO
-    call timestamp
-    attach timestamp
+  //
+  /* Build Message Blocks
+    - create HTML elements
+    - add classes and content
+    - call timestamp
+    - append message to Message-Container
+    - call random dad respoonse when message come from user
+    - calling function to store message 
   */
   function buildMessageBlock(message, position = 'left', human = false) {
     const $message = $('<div>');
@@ -111,7 +178,10 @@ $(document).ready(function () {
     $message.addClass('message').addClass(position);
     $block.addClass('text-block');
     $text.addClass('text').text(message).appendTo($block);
-    $timestamp.addClass('timestamp').text(getTimestamp()).appendTo($block);
+    $timestamp
+      .addClass('timestamp')
+      .html(`<p>${getTimestamp()}</p>`)
+      .appendTo($block);
     $message.append($block);
 
     $('.message-container').append($message);
@@ -121,39 +191,54 @@ $(document).ready(function () {
     if (human) {
       $('#input')[0].value = '';
       $('#input')[0].rows = 1;
-      focusOnInput();
       getRandomDadResponse();
     }
+    saveSessionStorageChat();
   }
-  /* TODO
-    DONE: choose random message
-    DONE: call build message with delay
-    show dad is typing 
+
+  /* Create Timestamp
+    - get date
+    - extract hour, minutes
+    - extract day, month, year
+    - concat and return timestamp string
   */
+  function getTimestamp() {
+    const fullDate = new Date();
+    const time = fullDate.toLocaleTimeString(); // '15:36:47'
+    const date = fullDate.toDateString().split(' '); // ['Tue', 'Feb', '28', '2023']
 
-  // creating a response queue to answer chronologically
-  // pull random text out of the array
-  // calculate delay time depending on text length
-  // push to response queue
-  // call func to work on responses
+    const timeStamp = `${date[2]}.${date[1]}.${date[3].slice(
+      2,
+      4
+    )}&nbsp&nbsp${time.slice(0, 5)}`;
 
+    return timeStamp;
+  }
+
+  /* Random Dad Response
+    - choose random message from Array
+    - calculate delay time depending on text length
+    - push message with delay time into response queue
+    - call function to work on response queue
+  */
   function getRandomDadResponse() {
     const randomText =
       randomDadText[Math.floor(Math.random() * randomDadText.length)];
     const delay = randomText.length * 150;
     // console.log('Dad text delay', delay);
     responseQueue.push([randomText, delay]);
-    console.log(randomText);
     // setTimeout(buildMessageBlock, delay, randomText);
     workingOnQueue == false ? workOnResponseQueue() : null;
   }
 
-  // Working on response queue
-  // create response message after timeout
-  // recursively call function until queue is empty
+  /* Working On Response Queue
+    - call build message after timeout
+    - recursively call function until queue is empty
+    - work a response queue to answer chronologically
+  */
   function workOnResponseQueue() {
+    // is there work todo?
     if (responseQueue.length > 0) {
-      // is there work todo?
       workingOnQueue = true;
       const task = responseQueue[0];
       setTimeout(() => {
@@ -166,41 +251,31 @@ $(document).ready(function () {
     }
   }
 
-  /* TODO
-    DONE: get date
-    DONE: extract hour, minutes
-    DONE: extract day, month, year
-    Done: return timestamp string
+  /* Scroll Down
+    - animates to scroll down to last message
+      in default time 1.6s
+    - instant scroll down when loading messages from session storage
+    - calls function to fade in only new messages
   */
-  function getTimestamp() {
-    const fullDate = new Date();
-    const time = fullDate.toLocaleTimeString(); // '15:36:47'
-    const date = fullDate.toDateString().split(' '); // ['Tue', 'Feb', '28', '2023']
-
-    const timeStamp = `${date[2]}.${date[1]}.${date[3].slice(
-      2,
-      4
-    )} ${time.slice(0, 5)}`;
-
-    return timeStamp;
-  }
-
-  /* TODO
-    DONE: scrolling behaviour -> smooth
-    DONE: scroll to last item in container
-  */
-  function scrollToLastMessage(newText = false) {
+  function scrollToLastMessage(newText = false, time = 1600) {
     // Reference: jQuery documentation .animate()
     $('.message-container').animate(
       { scrollTop: $('.message').last()[0].offsetTop },
       {
-        duration: 1600,
+        duration: time,
         queue: false, // run animation outside queue, start without waiting
       }
     );
-    // only fade-in newly added messages
-    if (newText) {
-      $('.message').animate({ opacity: 1 }, { duration: 1000 });
+    fadeInMessage(newText);
+  }
+
+  /* Display messages
+    - fade-in every newly added messages
+    - instantly display existing messages from storage
+  */
+  function fadeInMessage(_newText) {
+    if (_newText) {
+      $('.message').animate({ opacity: 1 }, { duration: 800 });
     } else {
       $('.message').css('opacity', 1);
     }
