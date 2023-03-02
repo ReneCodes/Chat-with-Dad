@@ -72,6 +72,7 @@ body {
   align-items: center;
 
   z-index: 1;
+  cursor: default;
 }
 
 .contact-image {
@@ -131,39 +132,35 @@ body {
   top: 30px;
   width: fit-content;
 
-  padding-top: 30px;
+  padding-top: 35px;
+  padding-bottom: 10px;
 
   background-color: var(--gray-800);
   color: var(--white-100);
 
-  transition: all 0.6s ease-out;
+  transition: right 0.5s ease-in-out;
 }
 .menu-bar:hover ~ .menu-items,
 .menu-bar:active ~ .menu-items,
-.menu-items:hover,
-.menu-items:active {
+.menu-items:hover {
   right: 0px;
 }
 
 .m-item {
-  display: block;
-  width: max-content;
+  min-width: max-content;
 }
 
-.joke-button {
-  display: inline-block;
+.menu-btn {
   text-align: center;
-
-  margin: 0 auto;
   padding: 10px 20px;
 
   cursor: pointer;
 }
-.joke-button:hover {
+.menu-btn:hover {
   color: var(--primary-color);
 }
 
-.joke-button:active {
+.menu-btn:active {
   background-color: var(--primary-dark-color);
   color: var(--white-100);
 }
@@ -176,10 +173,7 @@ body {
   display: flex;
   flex-direction: column;
 
-  padding-top: 100px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 90px 10px 10px 10px;
 
   overflow: scroll;
   overflow-y: auto;
@@ -189,7 +183,7 @@ body {
 .message {
   display: flex;
   flex-direction: column;
-  opacity: 0;
+  opacity: 0; /* animation handled in JS -> fadeInMessage()*/
 
   color: var(--gray-999);
 }
@@ -200,7 +194,7 @@ body {
   border: 3px solid var(--secondary-color);
 
   min-width: min-content;
-  max-width: 80%;
+  max-width: 70%;
   padding: 5px;
   margin: 10px;
 }
@@ -237,6 +231,7 @@ body {
 
   border-left: 8px solid white;
   border-bottom: 8px solid white;
+  /* preventing border from covering text */
   border-right: 8px solid transparent;
   border-top: 8px solid transparent;
 
@@ -245,6 +240,7 @@ body {
 
 .text {
   line-height: 22px;
+  white-space: pre-line;
 }
 
 .message.right {
@@ -273,10 +269,6 @@ body {
   color: var(--gray-500);
 }
 
-.date {
-  margin-right: 10px;
-}
-
 /* INPUT */
 .input-container {
   z-index: 10;
@@ -297,7 +289,8 @@ body {
 
 #input {
   overflow: scroll;
-  overflow-x: auto;
+  overflow-x: hidden;
+
   resize: none;
 
   min-height: 45px;
@@ -311,39 +304,33 @@ body {
   letter-spacing: inherit;
 
   background-color: white;
-  padding: 13px 10px 12px;
+  padding: 12px 10px;
   margin-right: 10px;
   width: 80%;
   caret-color: var(--primary-color);
 }
 
 #input:focus,
+#input:active,
 #input:hover {
   outline: none;
   border-bottom: 2px solid var(--primary-color);
 }
 
-.input-container .btn {
+.sent-text-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-color: var(--primary-color);
-  color: var(--white-100);
-  text-transform: uppercase;
-  letter-spacing: inherit;
-  font-size: 18px;
-  font-weight: bold;
-
-  border: none;
-  border-bottom: 2px solid transparent;
-
   min-height: 45px;
   width: 20%;
+
+  background-color: var(--primary-color);
+  border: none;
+
   cursor: pointer;
 }
 
-.input-container .btn:hover {
+.sent-text-btn:hover {
   background-color: var(--primary-dark-color);
 }
 
@@ -352,8 +339,8 @@ Sparkk(n.a.), Ready to use SVG icons for the web,
 (http://svgicons.sparkk.fr/). http://svgicons.sparkk.fr/ 
 */
 .submit-icon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
 }
 
 .submit-icon path {
