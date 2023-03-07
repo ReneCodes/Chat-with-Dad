@@ -1,0 +1,96 @@
+/** TODO
+    - toggle button to make 'enter in input field' send messages
+    - animate dad is typing
+    - split js files into functionalities
+
+    - get text search
+      - count appearances
+      - mark searched word (background color)
+      - jump up/down with arrow button (see 30js projects)
+
+*/
+
+/** DONE
+  * get access to input
+  * attache eventlistener to Send button ('click')
+  * create message function
+  * prevent default
+
+  * function create message 
+  * build and create text-block
+  * create timestamp function
+  * attach classes
+  * append text-block to message-container
+  * scroll down to lowest text-block function
+  * call auto-answer function with (delay time function)
+
+
+
+  * function delay answer time
+  * generate delay time by text length millisecond 
+
+  * function auto-answer
+  * build and create text-block
+  * fill text with random text from text-array-library
+  * create timestamp function
+  * attach classes
+  * append text-block to message-container
+  * scroll down to lowest text-block function
+
+  * function create timestamp 
+  * https://api.jquery.com/event.timeStamp/
+  * get new date (new Date).getTime()
+  * extract date dd/mmm/yy
+  * calculate time 24h
+  * build timestamp 27. Feb. 23 | 14:02
+  * hour and minutes shall always have 2 digits 00 - 24
+  * return timestamp
+
+  * function lowest-text-block-scroll
+  * get position on last text-block
+  * scroll down to it
+
+  * Dad joke api
+  * hook up dad joke api
+  * create menu to call dad joke
+  * show dad joke
+
+  * Session Storage
+  * save texts to local session Storage
+  * allow user to delete session Storage
+  * show init text if storage is empty
+  * else display text
+
+
+*/
+
+/*
+  jQuery
+  2 ways to loop through jQuery collection
+  
+  $paragraphs.each(function (index, element){
+    $paragraph = $(element);
+    $paragraph.html(paragraph.html() + "...woweeee!");
+  })
+
+  // using this keyword
+  $paragraphs.each(function (index, element){
+    $paragraph = $(this);
+    $paragraph.html(paragraph.html() + "...woweeee!");
+  })
+*/
+
+/*
+  jQuery eventlistener
+    .on('listener', function(event){});
+
+  $("#dog-pic").on("click", function(event) {
+        var $dot = $("<div></div>");
+        console.log(event);
+        $dot.addClass("dot");
+        $dot.css("top", event.pageY + 'px')
+            .css("left", event.pageX + 'px');
+        $dot.appendTo("body");
+  });
+
+*/
