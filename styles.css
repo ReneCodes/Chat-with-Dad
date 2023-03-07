@@ -28,6 +28,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: var(--primary-dark-color);
 
   height: 100vh;
 }
@@ -222,6 +223,7 @@ Citation:
   display: flex;
   flex-direction: column;
 
+  background-color: #fff;
   padding: 90px 10px 10px 10px;
 
   overflow: scroll;
