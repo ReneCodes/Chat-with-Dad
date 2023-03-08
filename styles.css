@@ -260,7 +260,6 @@ Citation:
   width: 18px;
 
   transform: rotate(45deg);
-  z-index: -2;
 }
 
 .message.right .text-block::before {
